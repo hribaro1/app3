@@ -1,0 +1,80 @@
+author: mongoose-os
+description: A JS-enabled demo Mongoose OS firmware
+# arch: PLATFORM
+version: 1.0
+manifest_version: 2017-05-18
+libs_version: ${mos.version}
+modules_version: ${mos.version}
+mongoose_os_version: ${mos.version}
+
+tags:
+  - c
+
+filesystem:
+  - fs
+
+sources:
+  - src
+
+config_schema:
+ # nastavitve naprave
+  - ["app.par", "o", {title: "Application parameter Config"}]
+  - ["app.pin", "i", 4, {title: "PWM pin fan is attached to"}]
+  - ["app.user", "s", "user", {title: "Current owner of device"}]
+  - ["app.name", "s", "name", {title: "Name of device"}]
+  - ["app.sen.time", "i", 10000, {title: "miliseconds period for reading DHT sensor"}]
+  - ["app.sen.val", "i", 20, {title: "Value to be changed in order to publish value"}]
+  - ["app.sen.mode", "b", true, {title: "Auto or sensor mode"}]
+  - ["app.sen.toffset", "i", 0, {title: "Temperature sensor negative offset"}]
+  - ["app.sen.hoffset", "i", 0, {title: "Humidity sensor negative offset"}]
+  - ["app.sen.speed", "i", 2, {title: "Speed of fans"}]   
+  - ["app.old.speed", "i", 2, {title: "oldSpeed of fans"}]   
+  - ["app.lim.hum1", "i", 19, {title: "Temperature limit 1"}]
+  - ["app.lim.hum2", "i", 17, {title: "Temperature limit 2"}]
+  - ["app.lim.temp1", "i", 70, {title: "Humidity limit 1"}]
+  - ["app.lim.temp2", "i", 80, {title: "Humidity limit 2"}]
+  - ["app.val.hum", "i", 20, {title: "Humidity reading DHT sensor"}]
+  - ["app.val.temp", "i", 45, {title: "Temperature reading DHT sensor"}]
+  - ["app.use.hum", "b", true, {title: "Humidity checked in sensor mode"}]
+  - ["app.use.temp", "b", true, {title: "Temperature checked in sensor mode"}]
+  - ["app.temp.under", "b", false, {title: "Temperature under limit values"}]  
+  - ["app.hum.above", "b", false, {title: "Humidity above limit values"}]    
+  - ["device.id", "bairSen??????"]
+  - ["provision.btn.pin", "i", 0, {title: "Reset button GPIO pin"}]
+  - ["provision.btn.hold_ms", "i", 5000, {title: "Hold interval in milliseconds. -1 to disable, 0 to reset if held on boot, > 0 to reset if held at runtime for this long."}]
+  - ["provision.led.active_high", "b", true, {title: "True if LED is on when output is high (1)"}]
+
+
+# ap parametri
+  - ["wifi.ap", "o", {title: "WiFi Access Point Config"}]
+  - ["wifi.ap.enable", "b", true, {title: "Enable"}]
+  - ["wifi.ap.ssid", "s", "bairSen??????", {title: "SSID"}]
+  - ["wifi.ap.pass", "s", "bossplast", {title: "Password", type: "password"}]
+
+# sta parametri
+  - ["wifi.sta", "o", {title: "WiFi Station Config"}]
+  - ["wifi.sta.enable", "b", false, {title: "Connect to existing WiFi"}]
+  - ["wifi.sta.ssid", "s",  {title: "SSID"}]
+  - ["wifi.sta.pass", "s",  {title: "Password", type: "password"}]
+  - ["wifi.sta.ip", "s", {title: "Static IP Address"}]
+
+libs:
+  - origin: https://github.com/mongoose-os-libs/boards
+  - origin: https://github.com/mongoose-os-libs/ca-bundle
+  - origin: https://github.com/mongoose-os-libs/rpc-service-config
+  - origin: https://github.com/mongoose-os-libs/rpc-service-fs
+  - origin: https://github.com/mongoose-os-libs/rpc-uart
+  - origin: https://github.com/mongoose-os-libs/rpc-ws
+  - origin: https://github.com/mongoose-os-libs/rpc-common
+  - origin: https://github.com/mongoose-os-libs/wifi
+  - origin: https://github.com/mongoose-os-libs/gcp
+  - origin: https://github.com/mongoose-os-libs/mjs  # <-- Add this line!
+  - origin: https://github.com/mongoose-os-libs/mqtt  # <-- Add this line!
+  - origin: https://github.com/mongoose-os-libs/dht  # <-- Add this line!
+  - origin: https://github.com/mongoose-os-libs/http-server  # <-- Add this line!
+  - origin: https://github.com/mongoose-os-libs/dash
+  - origin: https://github.com/mongoose-os-libs/rpc-service-ota
+  - origin: https://github.com/mongoose-os-libs/provision
+
+# Used by the mos tool to catch mos binaries incompatible with this file format
+manifest_version: 2017-09-29
